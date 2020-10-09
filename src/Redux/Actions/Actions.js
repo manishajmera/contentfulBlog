@@ -11,26 +11,41 @@ export const setAllBlogList = (data) => ({
   type: types.BLOGLIST,
   blogList:data
 });
+export const setLoader = () => ({
+  type: types.LOADER,
+
+});
 export const setBlogDetails = (data) => ({
   type: types.BLOGDETAILS,
   blogData:data
 });
 export const dispatchGetAllBlogList = () => {
-  
   return function(dispatch, getState) {
+    dispatch(setLoader())
     client.getEntries({ content_type: 'blogs' }).then((data)=>{
         dispatch(setAllBlogList(data.items));
-
-    }).catch(console.error);
+        dispatch(setLoader())
+    }).catch((error)=>{
+      dispatch(setLoader());
+      console.log(error)}
+      );
   };
 }
 
 export const dispatchGetBlogDetails = (id) => {
+  
   return function(dispatch, getState) {
+    dispatch(setLoader())
+
     client.getEntry(`${id}`)
   .then((data) => {
-    dispatch(setBlogDetails(data.fields))
-  }).catch(console.error)
+    dispatch(setBlogDetails(data.fields));
+    dispatch(setLoader())
+
+  }).catch((error)=>{
+    dispatch(setLoader())
+    console.log(error);
+  })
 
   };
 }

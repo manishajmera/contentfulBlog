@@ -3,19 +3,21 @@ import ArticleCard from '../ArticleCard/ArticleCard';
 import { connect  } from "react-redux";
 import { Link } from "react-router-dom";
 import "./ArticleList.css";
+import Loader from '../Loader/Loader';
+
 
 import {
     dispatchGetAllBlogList
 } from "../../Redux/Actions/Actions";
 
-function ArticleList({blogList,dispatchGetAllBlogList}) {
+function ArticleList({blogList,dispatchGetAllBlogList,loader}) {
     useEffect(() => {
         dispatchGetAllBlogList();
     }, [dispatchGetAllBlogList])
     return (
         <div className="container">
         <Link to="/post-publish-form" className="btn btn-primary publishbtn">Publish a Post</Link>
-        {blogList ? 
+        { loader ? <Loader /> : blogList ? 
             blogList.map((item,index)=> <ArticleCard {...item.fields } key={item.sys.id} sys={item.sys}  />) : null}
        </div>
     )
@@ -24,6 +26,7 @@ function ArticleList({blogList,dispatchGetAllBlogList}) {
 function mapStateToProps(state) {
     return {
       blogList: state.blogList,
+      loader:state.loader
     };
   }
   

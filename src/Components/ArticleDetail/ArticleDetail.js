@@ -2,16 +2,19 @@ import React,{useEffect} from 'react';
 import ImageWithHeader from '../ImageWithHeader/ImageWithHeader';
 import "./ArticleDetail.css";
 import { connect  } from "react-redux";
+import Loader from '../Loader/Loader';
 import {
     dispatchGetBlogDetails
 } from "../../Redux/Actions/Actions";
 import { useParams } from "react-router-dom";
-function ArticleDetail({dispatchGetBlogDetails,blogData}) {
+function ArticleDetail({dispatchGetBlogDetails,blogData,loader}) {
+
     let { id } = useParams();
     useEffect(() => {
         dispatchGetBlogDetails(id);
     },[dispatchGetBlogDetails,id]);
     return (
+        loader ? <Loader /> : 
         blogData ? <>
         <ImageWithHeader title={blogData.title} />  
         <div className="container">
@@ -24,7 +27,8 @@ function ArticleDetail({dispatchGetBlogDetails,blogData}) {
 }
 function mapStateToProps(state) {
     return {
-    blogData: state.blogData,
+      blogData: state.blogData,
+      loader:state.loader
     };
   }
   
