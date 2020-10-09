@@ -1,0 +1,17 @@
+.bkgImg {
+    background-size: cover;
+    height: 400px;
+    background-position-y: center;
+    position: relative;
+}
+.paddingCls {
+    padding: 30px 0px;
+}
+.caption {
+    position: absolute;
+    bottom:0;
+    margin: 0;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+}
