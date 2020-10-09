@@ -1,11 +1,31 @@
 import React from 'react';
 import "./PublishFormBlog.css";
+// const contentful = require('contentful-management')
+
+// const client = contentful.createClient({
+//   accessToken: '<content_management_api_key>'
+// })
+
+
+
 
 export default function PublishFormBlog() {
     const handleSubmit = (event) => {
         event.preventDefault();
         //api dispatch function should come here
-        console.log(event.target[1].value);
+    //     client.getSpace('<space_id>')
+    //         .then((space) => space.getEnvironment('<environment_id>'))
+    //         .then((environment) => environment.createEntry('<content_type_id>', {
+    //         fields: {
+    //             title: {
+    //             'en-US': 'Entry title'
+    //             }
+    //         }
+    //     }))
+    // .then((entry) => console.log(entry))
+    // .catch(console.error)
+        // window.location.href = window.location.origin;
+        // console.log(event.target[1].value);
     }
     return (
         <div className="container">
