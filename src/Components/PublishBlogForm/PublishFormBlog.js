@@ -25,7 +25,7 @@ function PublishFormBlog({dispatchPostBlog,loader}) {
               'en-US': event.target[2].value
             },
             date:{
-              'en-US':new Date().toISOString()
+              'en-US':new Date()
             }
           }
           dispatchPostBlog(data)
