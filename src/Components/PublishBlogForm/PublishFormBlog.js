@@ -5,45 +5,61 @@ import "./PublishFormBlog.css";
 // const client = contentful.createClient({
 //   accessToken: '<content_management_api_key>'
 // })
+import { connect  } from "react-redux";
+import {
+    dispatchPostBlog
+} from "../../Redux/Actions/Actions";
+import Loader from '../Loader/Loader';
 
-
-
-
-export default function PublishFormBlog() {
+function PublishFormBlog({dispatchPostBlog,loader}) {
     const handleSubmit = (event) => {
         event.preventDefault();
-        //api dispatch function should come here
-    //     client.getSpace('<space_id>')
-    //         .then((space) => space.getEnvironment('<environment_id>'))
-    //         .then((environment) => environment.createEntry('<content_type_id>', {
-    //         fields: {
-    //             title: {
-    //             'en-US': 'Entry title'
-    //             }
-    //         }
-    //     }))
-    // .then((entry) => console.log(entry))
-    // .catch(console.error)
-        // window.location.href = window.location.origin;
-        // console.log(event.target[1].value);
+        const data = {
+            title: {
+              'en-US': event.target[0].value
+            },
+            description : {
+              'en-US': event.target[1].value
+            },
+            summary : {
+              'en-US': event.target[2].value
+            },
+            date:{
+              'en-US':new Date().toISOString()
+            }
+          }
+          dispatchPostBlog(data)
     }
     return (
+        loader ? <Loader /> : 
         <div className="container">
         <form className="form-class" onSubmit={handleSubmit}>
             <div className="form-group">
                     <label htmlFor="title">Title</label>
-                    <input type="text" className="form-control" id="title  " />
+                    <input type="text" className="form-control" id="title  " required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="summary">Summary</label>
-                    <textarea className="form-control" rows="5" id="summary"></textarea>
+                    <textarea className="form-control" rows="5" id="summary" required></textarea>
                 </div>
                 <div className="form-group">
                     <label htmlFor="description">Description</label>
-                    <textarea className="form-control" rows="5" id="description"></textarea>
+                    <textarea className="form-control" rows="5" id="description" required></textarea>
                 </div>
                 <button type="submit" className="btn btn-default">Submit</button>
         </form>
        </div>
     )
 }
+
+function mapStateToProps(state) {
+    return {
+        loader:state.loader
+      };
+  }
+  
+  const mapDispatchToProps = {
+    dispatchPostBlog,
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(PublishFormBlog);
